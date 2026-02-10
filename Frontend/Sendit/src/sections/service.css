@@ -1,0 +1,69 @@
+.image-container {
+  position: relative;
+  width: 250px;        /* adjust */
+  height: 300px;       /* adjust */
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Overlay hidden by default */
+.overlay {
+  position: absolute;
+  inset: 0; /* top:0 right:0 bottom:0 left:0 */
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 4px;
+}
+
+/* Text styling */
+.overlay-text {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Show overlay on hover */
+.image-container:hover .overlay {
+  opacity: 1;
+}
+
+.services {
+    margin-left: 3rem ;
+    margin-right: 3rem;
+    min-height: 520px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+.services .container {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.services p {
+    color: #F43F5E;
+    margin-bottom: 2.5rem;
+    font-weight: bold;
+    font-size: 20px;
+}
+.services span {
+    font-weight: 100;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
