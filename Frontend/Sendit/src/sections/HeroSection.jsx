@@ -13,8 +13,7 @@ export default function HeroSection() {
 
       <div className="details">
         <h1>
-          Send <span>Parcels</span> Smarter. Track Deliveries in{" "}
-          <span>Real-Time</span>
+          Send <span className="highlight">Parcels</span> Smarter. Track Deliveries in <span className="highlight">Real-Time</span>
         </h1>
         <p>
           Get instant delivery quotes, track your parcel, and receive real-time
@@ -34,7 +33,7 @@ export default function HeroSection() {
 
     {/* RIGHT */}
     <div className="right">
-      <img src={heroImage}  alt="Delivery rider" />
+      <img src={heroImage} alt="Delivery rider" loading="lazy" />
     </div>
   </div>
 </section>

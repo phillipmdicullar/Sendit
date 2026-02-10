@@ -1,29 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
 .hero {
-  padding: 80px 0;
-  height: 520px;
-  background-color: #FFF7ED;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    padding: 80px 0;
+    min-height: 520px;
+    background-color: #FFF7ED;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
 }
 
 .hero .split {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  padding: 0 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 0 24px;
+    position: relative;
+    z-index: 2;
 }
 .hero .left,
 .hero .right {
   flex: 1; /* 👈 THIS makes them equal width */
 }
 .hero .right img {
-  width: 100%;
-  max-width: 500px;
-  display: block;
-  margin-left: auto; /* pushes image to right */
+    width: 100%;
+    max-width: 500px;
+    display: block;
+    margin-left: auto; /* pushes image to right */
+}
+
+/* Floating animation for the hero image */
+.hero .right img {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0); }
 }
 .hero-actions {
     display: flex;
@@ -50,23 +68,58 @@
     background-color: #F97316;
     color: white;
     border: none;
-    
 }
 .hero button.primary:hover {
     background-color: #EF4444;
+}
+.hero button:focus {
+  outline: 3px solid rgba(249, 115, 22, 0.25);
+  outline-offset: 2px;
+}
+
+/* Entrance animations for left column elements (staggered) */
+.hero .left .badge,
+.hero .left .details h1,
+.hero .left .details p,
+.hero .left .hero-actions {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 560ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+.hero .left .badge { animation-delay: 120ms; }
+.hero .left .details h1 { animation-delay: 320ms; }
+.hero .left .details p { animation-delay: 520ms; }
+.hero .left .hero-actions { animation-delay: 720ms; }
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Badge subtle pulse */
+.badge {
+    display: inline-block;
+    animation: pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.03); opacity: 0.9; }
+    100% { transform: scale(1); opacity: 1; }
 }
 .badge {
     color: #EF4444;
     font-weight: bold;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-span {
+.details .highlight {
     color: #F97316;
 }
 .details h1 {
     font-size: 36px;
     font-weight: bold;
-    font-family: Playfair Display, serif;
+    font-family: 'Playfair Display', serif;
 }
 .details p {
     font-size: 18px;
@@ -74,4 +127,58 @@ span {
     margin-top: 16px;
     font-weight: 600;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 48px 0;
+    }
+    .hero .split {
+        flex-direction: column-reverse;
+        gap: 20px;
+        text-align: center;
+    }
+    .hero .left, .hero .right {
+        width: 100%;
+    }
+    .hero .right img {
+        margin: 0 auto;
+        max-width: 320px;
+    }
+    .details h1 {
+        font-size: 28px;
+    }
+    .details p {
+        font-size: 16px;
+    }
+}
+
+/* Animated subtle gradient background */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(249,115,22,0.06), rgba(99,102,241,0.04));
+    z-index: 1;
+    pointer-events: none;
+    transform: translateX(-10%);
+    animation: bgShift 12s linear infinite;
+}
+@keyframes bgShift {
+    0% { transform: translateX(-10%); }
+    50% { transform: translateX(10%); }
+    100% { transform: translateX(-10%); }
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .hero .right img,
+    .hero .left .badge,
+    .hero .left .details h1,
+    .hero .left .details p,
+    .hero .left .hero-actions,
+    .hero::before {
+        animation: none !important;
+        transition: none !important;
+    }
 }
