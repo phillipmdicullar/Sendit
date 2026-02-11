@@ -39,9 +39,9 @@
 .auth-page button {
   margin-top: 0.5rem;
   padding: 0.65rem 0.9rem;
-  background: #F97316;
+
+background-color: #0f172a;
   color: #fff;
-  border: none;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
@@ -49,6 +49,10 @@
 
 .auth-page button:hover {
   filter: brightness(0.95);
+  
+    background-color: transparent;
+  border: 1px solid black;
+  color: #0f172a;
 }
 
 .auth-page .small-link {

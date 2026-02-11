@@ -40,14 +40,15 @@
 }
 
 .services {
-    margin-left: 3rem ;
-    margin-right: 3rem;
+    padding: 3rem ;
+    padding: 3rem;
     min-height: 520px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
+    
 }
 .services .container {
     display: flex;
@@ -58,10 +59,13 @@
     justify-content: center;
 }
 .services p {
-    color: #F43F5E;
+
+        font-family: Playfair Display, serif;
+    font-size: 24px;
+    font-weight: 800;
+    color: #F97316;
     margin-bottom: 2.5rem;
     font-weight: bold;
-    font-size: 20px;
 }
 .services span {
     font-weight: 100;
