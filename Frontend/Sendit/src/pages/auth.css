@@ -1,0 +1,68 @@
+/* Auth pages (Login / Signup) */
+.auth-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 420px;
+  margin: 3.5rem auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(2,6,23,0.06);
+}
+
+.auth-page h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.auth-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.auth-page label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  color: #0f172a;
+}
+
+.auth-page input {
+  margin-top: 0.35rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #e6eef8;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.auth-page button {
+  margin-top: 0.5rem;
+  padding: 0.65rem 0.9rem;
+  background: #F97316;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.auth-page button:hover {
+  filter: brightness(0.95);
+}
+
+.auth-page .small-link {
+  display: block;
+  text-align: center;
+  margin-top: 0.5rem;
+  color: #2563eb;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 480px) {
+  .auth-page {
+    margin: 1.5rem;
+    padding: 1rem;
+  }
+}

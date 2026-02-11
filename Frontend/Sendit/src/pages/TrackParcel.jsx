@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './track.css';
 
 export default function TrackParcel() {
   const [code, setCode] = useState('');
