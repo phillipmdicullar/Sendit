@@ -38,7 +38,8 @@
 
 .track-page button {
   padding: 0.6rem 0.9rem;
-  background: #111827;
+  background: #F97316;
+  border: none;
   color: #fff;
   border-radius: 6px;
   cursor: pointer;
@@ -46,8 +47,9 @@
 }
 .track-page button:hover {
   filter: brightness(0.95);
-  background-color: transparent;
-  color: black;
+  border: none;
+  background-color: #F97316;
+  color: white;
 }
 
 @media (max-width: 640px) {
