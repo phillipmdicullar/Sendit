@@ -12,9 +12,8 @@ const LOGOS = [Amazon, FedEx, IBM, Walmart, Coca, Logo];
 export default function PartnersSection() {
   return (
     <section className="partners">
+      <h2>Our partners</h2>
       <div className="container">
-        
-
         <div className="partner-logos">
           <div className="marquee" aria-hidden>
             {LOGOS.concat(LOGOS).map((src, i) => (

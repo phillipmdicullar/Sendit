@@ -1,7 +1,7 @@
 .how-it-works {
     color: white;
     padding: 3rem;
-    background-color: #fff7ed;
+    
 }
 .how-it-works h2 {
     font-family: Playfair Display, serif;
@@ -11,6 +11,7 @@
 }
 .steps {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     margin-top: 2rem;
 }

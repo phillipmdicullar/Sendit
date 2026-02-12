@@ -10,9 +10,11 @@ export default function Home() {
     <main>
       <HeroSection />
       <PartnersSection />
-      <ServicesSection />
+      
       <HowItWorksSection />
+      
       <WhyChooseUsSection />
+      
     </main>
   );
 }

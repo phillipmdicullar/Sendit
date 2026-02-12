@@ -1,6 +1,6 @@
 import React from 'react';
 import FeatureCard from '../components/FeatureCard';
-
+import './why.css';
 export default function WhyChooseUsSection() {
   const features = [
     { title: 'Reliable', details: 'Dependable delivery times.' },

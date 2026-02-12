@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './feature.css';
 export default function FeatureCard({ title, details }) {
   return (
     <div className="feature-card">

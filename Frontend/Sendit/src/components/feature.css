@@ -1,0 +1,21 @@
+.feature-card {
+    font-family: 'Inter', sans-serif;
+    background-color: #ffedd5;
+    border-radius: 4px;
+    padding: 1.5rem;
+
+    margin-bottom: 2rem;
+    flex: 1;
+    min-width: 250px;
+}
+h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+p {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.4;
+}

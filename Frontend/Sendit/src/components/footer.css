@@ -2,5 +2,6 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #666; padding: 1.5rem;
+    padding: 3rem; 
 }
