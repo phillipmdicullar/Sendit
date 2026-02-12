@@ -11,10 +11,18 @@
 }
 .steps {
     display: flex;
-    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 3rem;
+    width: 100%;
+    flex-direction: row;
     justify-content: space-between;
-    margin-top: 2rem;
+    flex-wrap: wrap;
 }
-.steps img {
-    object-fit: cover;
+.step {
+    
+    width: 250px;
+    padding: 2rem;
+    border-radius: 4px;
+    background-color: #ffedd5;
+    
 }

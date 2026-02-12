@@ -8,3 +8,8 @@
     font-weight: 800;
     color: #F97316;
 }
+@media (max-width: 768px) {
+    .container h2 {
+        text-align: center;
+    }
+}

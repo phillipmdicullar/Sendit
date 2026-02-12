@@ -79,3 +79,9 @@
     width: 64px;
   }
 }
+
+@media (max-width: 768px) {
+    .partners h2 {
+      text-align: center;
+    }
+}
