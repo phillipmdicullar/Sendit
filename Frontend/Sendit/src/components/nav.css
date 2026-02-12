@@ -29,6 +29,52 @@
 }
 
 .nav-links a:hover {
-  background-color: black;
+  background-color: #F97316;
   color: white;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+}
+@media (max-width: 768px) {
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    position: absolute;
+    top: 80px;   /* below navbar */
+    right: 0;
+    width: 200px;
+    padding: 20px;
+    display: none; /* hidden by default */
+    border-radius: 4px; 
+box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .nav-links.show {
+    display: flex; /* toggle this class with JS */
+  }
+}
+body {
+  padding-top: 80px; /* equal to navbar height */
+}
+.site-navbar {
+  height: 80px;
+  position: fixed;       /* keeps it fixed at the top */
+  top: 0;                /* aligns it to the very top */
+  left: 0;
+  width: 100%;           /* full width */
+  background-color: white; /* ensure background covers content */
+  z-index: 1000;         /* keeps it above other elements */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* optional subtle shadow */
 }
