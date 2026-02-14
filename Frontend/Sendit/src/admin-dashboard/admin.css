@@ -15,7 +15,12 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  position: sticky;
+  top: 0;
+  height: 100vh;
 }
+
 
 /* ---------- LOGO AREA ---------- */
 
@@ -97,9 +102,9 @@
 .right-panel {
   flex: 1;
   padding: 2rem;
-  overflow-y: auto;
-  background-color: #f6f8fb;
+  min-height: 100vh;
 }
+
 .top h3 {
   margin-top: 8px;
   font-size: 18px;

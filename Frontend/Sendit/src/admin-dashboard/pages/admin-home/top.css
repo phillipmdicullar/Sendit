@@ -1,0 +1,24 @@
+.notification img {
+    width: 20px;
+    height: 20px;
+    
+}
+.notification {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+}
+.notification span {
+    font-size: 14px;
+    color: green;
+}
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: white;
+    border-radius: 4px;
+    padding: 1rem;
+}
