@@ -65,7 +65,10 @@ box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     display: flex; /* toggle this class with JS */
   }
 }
-body {
+.has-navbar {
+  /* ensure top spacing only when navbar is present */
+}
+body.has-navbar {
   padding-top: 80px; /* equal to navbar height */
 }
 .site-navbar {
