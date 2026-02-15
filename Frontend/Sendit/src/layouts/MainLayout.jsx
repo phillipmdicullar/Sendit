@@ -7,7 +7,6 @@ export default function MainLayout({ children }) {
     <div className="app-root">
       <Navbar />
       <div className="content">{children}</div>
-      <Footer />
     </div>
   );
 }

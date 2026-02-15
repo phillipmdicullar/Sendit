@@ -1,14 +1,121 @@
+.summary-container {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+
+/* ================= HEADER ================= */
+
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.summary-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.summary-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.summary-actions input {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  outline: none;
+}
+
+.primary-btn {
+  background: #111827;
+  color: white;
+  border: none;
+  padding: 9px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.primary-btn:hover {
+  background: #000;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
 table {
-    background-color: white;
-    width: 100%;
-    border-radius: 8px;
-    padding: 1rem;
+  width: 100%;
+  border-collapse: collapse;
 }
-tr {
-   text-align: start;
+
+thead {
+  background: #111827;
+  color: white;
 }
+
 th {
-    background-color: black;
-    text-align: start;
-    color: white;
+  text-align: left;
+  padding: 12px;
+  font-size: 14px;
+}
+
+td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #f1f1f1;
+  font-size: 14px;
+}
+
+tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* ================= STATUS BADGES ================= */
+
+.status {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.transit {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+/* ================= ACTION BUTTONS ================= */
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actions button {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.view {
+  background: #e5e7eb;
+}
+
+.edit {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.delete {
+  background: #fee2e2;
+  color: #dc2626;
 }
