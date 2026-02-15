@@ -11,16 +11,20 @@
 }
 .notification span {
     font-size: 14px;
-    color: green;
+    font-weight: 800;
+    color: red;
 }
 .top-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    background-color: white;
+    
     border-radius: 4px;
     padding: 1rem;
+}
+h3 {
+    color: white;
 }
 .boxes {
    
@@ -28,6 +32,7 @@
     width: 200px;
     padding: 1rem;
     border-radius: 4px;
+    background-color: rgb(89, 148, 201);
     
 }
 .boxes:nth-child(2){
@@ -50,8 +55,9 @@
 
 }
 .box-wrapper img {
-    height: 40px;
-    width: 40px;
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
 }
 .top-wrapper {
     display: flex;

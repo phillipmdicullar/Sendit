@@ -2,6 +2,9 @@ import React from 'react'
 import Bell from '../../../assets/bell.png'
 import './top.css';
 import Box from './icons/box.png';
+import Bus from './icons/bus.png';
+import Shipped from './icons/shipped.png';
+import Canceled from './icons/cancel-order.png';
 function Top() {
   return (
       <div className="section">
@@ -27,21 +30,21 @@ function Top() {
         </div>
                 <div className="boxes">
           <div className="top-wrapper">
-            <img src=""/>
+            <img src={Bus}/>
           <h3>123</h3>
           </div>
           <p>In transist</p>
         </div>
                 <div className="boxes">
           <div className="top-wrapper">
-            <img src=""/>
+            <img src={Shipped}/>
           <h3>123</h3>
           </div>
           <p>Delivered</p>
         </div>
         <div className="boxes">
           <div className="top-wrapper">
-            <img src=""/>
+            <img src={Canceled}/>
           <h3>123</h3>
           </div>
           <p>Canceled</p>
