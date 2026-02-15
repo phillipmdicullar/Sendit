@@ -22,3 +22,40 @@
     border-radius: 4px;
     padding: 1rem;
 }
+.boxes {
+   
+    height: 120px;
+    width: 200px;
+    padding: 1rem;
+    border-radius: 4px;
+    
+}
+.boxes:nth-child(2){
+    background-color: rgba(212, 171, 171, 0.671);
+    
+}
+.boxes:nth-child(3){
+    background-color: rgba(165, 212, 89, 0.671);
+    
+}
+.boxes:nth-child(4){
+    background-color: rgba(221, 122, 92, 0.671);
+    
+}
+.box-wrapper {
+    margin: 3rem 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+.box-wrapper img {
+    height: 40px;
+    width: 40px;
+}
+.top-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
