@@ -119,3 +119,4 @@ tbody tr:hover {
   background: #fee2e2;
   color: #dc2626;
 }
+tr:nth-child(even){background-color: #f2f2f2; }

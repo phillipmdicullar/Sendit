@@ -7,14 +7,24 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
-  // Hide navbar on user dashboard routes
-  if (location.pathname.startsWith('/admin-dashboard')) return null;
+  const isAdminDashboard =
+    location.pathname.startsWith('/admin-dashboard');
 
-  // Add a body class while navbar is mounted so global padding only applies when navbar exists
+  // Always run effect
   useEffect(() => {
-    document.body.classList.add('has-navbar');
-    return () => document.body.classList.remove('has-navbar');
-  }, []);
+    if (!isAdminDashboard) {
+      document.body.classList.add('has-navbar');
+    } else {
+      document.body.classList.remove('has-navbar');
+    }
+
+    return () => {
+      document.body.classList.remove('has-navbar');
+    };
+  }, [isAdminDashboard]);
+
+  // Hide visually instead of unmounting component lifecycle
+  if (isAdminDashboard) return null;
 
   return (
     <header className="site-navbar">
@@ -22,12 +32,14 @@ export default function Navbar() {
         <div className="brand">
           <img src={Logo} alt="Sendit Logo" />
         </div>
-        <button 
-          className="menu-toggle" 
+
+        <button
+          className="menu-toggle"
           onClick={() => setOpen(!open)}
         >
           ☰
         </button>
+
         <nav className={`nav-links ${open ? 'show' : ''}`}>
           <Link to="/">Home</Link>
           <Link to="/track">Track</Link>
