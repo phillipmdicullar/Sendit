@@ -11,7 +11,7 @@ function Summary() {
 
         <div className="summary-actions">
           <input type="text" placeholder="Search parcel..." />
-          <button className="primary-btn">+ New Parcel</button>
+          <button className="primary-btn">Search Parcel</button>
         </div>
       </div>
 
@@ -26,7 +26,7 @@ function Summary() {
               <th>Status</th>
               <th>Current Location</th>
               <th>Price</th>
-              <th>Dimension</th>
+           
               <th>Actions</th>
             </tr>
           </thead>
@@ -46,7 +46,7 @@ function Summary() {
 
                 <td>Kware Kwa Njenga</td>
                 <td>KES 200</td>
-                <td>20×8×1</td>
+              
 
                 <td className="actions">
                   <button className="view">View</button>

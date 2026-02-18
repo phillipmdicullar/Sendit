@@ -5,6 +5,7 @@ import Box from './icons/box.png';
 import Bus from './icons/bus.png';
 import Shipped from './icons/shipped.png';
 import Canceled from './icons/cancel-order.png';
+import { NavLink } from 'react-router-dom';
 function Top() {
   return (
       <div className="section">
@@ -13,8 +14,9 @@ function Top() {
             Dashboard
         </div>
         <div className="notification">
-            <img src={Bell} alt="Notification Bell" />
-            <span>1</span>
+          <NavLink to="/admin-dashboard/notifications">
+          <img src={Bell} alt="notification bell" />
+          </NavLink>
         </div>
     </div>
     <div className="center">

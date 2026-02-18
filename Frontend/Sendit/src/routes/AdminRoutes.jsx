@@ -8,6 +8,7 @@ import Analytics from '../admin-dashboard/pages/Analytics';
 import Customers from '../admin-dashboard/pages/Customers';
 import AdminHome from '../admin-dashboard/pages/AdminHome';
 import Settings from '../admin-dashboard/pages/Settings';
+import Notification from '../admin-dashboard/pages/Notification';
 
 function AdminRoutes() {
   return (
@@ -24,6 +25,7 @@ function AdminRoutes() {
         <Route path="customers" element={<Customers />} />
         <Route path="users" element={<Users />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="notifications" element={<Notification />} />
 
       </Route>
 

@@ -26,7 +26,7 @@ function Orders() {
               <th>Status</th>
               <th>Current Location</th>
               <th>Price</th>
-              <th>Dimension</th>
+             
               <th>Actions</th>
             </tr>
           </thead>
@@ -46,7 +46,7 @@ function Orders() {
 
                 <td>Kware Kwa Njenga</td>
                 <td>KES 200</td>
-                <td>20×8×1</td>
+                
 
                 <td className="actions">
                   <button className="view">View</button>
