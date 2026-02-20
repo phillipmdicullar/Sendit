@@ -1,15 +1,15 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 
-import UserLayout from '../user-dashboard/UserLayout'
-import CreateOrder from '../user-dashboard/pages/CreateOrder'
-import Orders from '../user-dashboard/pages/Orders'
-import OrderDetail from '../user-dashboard/pages/OrderDetail'
+import UserLayout from '../user/UserLayout'
+import CreateOrder from '../user/pages/CreateOrder'
+import Orders from '../user/pages/Orders'
+import OrderDetail from '../user/pages/OrderDetail'
 
 function UserRoutes(){
   return (
     <Routes>
-      <Route path="/user-dashboard" element={<UserLayout />}>
+      <Route path="/user" element={<UserLayout />}>
         <Route index element={<Orders />} />
         <Route path="create" element={<CreateOrder />} />
         <Route path="orders" element={<Orders />} />

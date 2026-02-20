@@ -45,7 +45,7 @@ export default function Navbar() {
           <Link to="/track">Track</Link>
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
-          <Link to="/admin-dashboard">Dashboard</Link>
+          <Link to="/user">Dashboard</Link>
         </nav>
       </div>
     </header>

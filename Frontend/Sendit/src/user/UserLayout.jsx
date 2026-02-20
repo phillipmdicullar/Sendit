@@ -1,6 +1,6 @@
 import React from 'react'
 import Logo from '../assets/logo.png'
-import '../admin-dashboard/admin.css'
+
 import { NavLink, Outlet } from 'react-router-dom'
 
 function UserLayout() {
@@ -14,13 +14,13 @@ function UserLayout() {
 
         <ul>
           <li>
-            <NavLink to="/user-dashboard">Home</NavLink>
+            <NavLink to="/user">Home</NavLink>
           </li>
           <li>
-            <NavLink to="/user-dashboard/create">Create Order</NavLink>
+            <NavLink to="/user/create">Create Order</NavLink>
           </li>
           <li>
-            <NavLink to="/user-dashboard/orders">My Orders</NavLink>
+            <NavLink to="/user/orders">My Orders</NavLink>
           </li>
           <li>
             <NavLink to="/track">Track Parcel</NavLink>
