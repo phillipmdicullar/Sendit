@@ -1,17 +1,12 @@
 import React from 'react'
 import Logo from '../assets/logo.png'
-
+import './user.css'
 import { NavLink, Outlet } from 'react-router-dom'
 
 function UserLayout() {
   return (
-    <div className="admin-dashboard">
-      <div className="left-panel">
-        <div className="top">
-          <img src={Logo} alt="logo" />
-          <h3>User</h3>
-        </div>
-
+    <div className="user-dashboard">
+      <div className="user-panel">
         <ul>
           <li>
             <NavLink to="/user">Home</NavLink>
@@ -26,11 +21,8 @@ function UserLayout() {
             <NavLink to="/track">Track Parcel</NavLink>
           </li>
         </ul>
-        <div className="logout">
-          <button>Logout</button>
-        </div>
       </div>
-      <div className="right-panel">
+      <div className="bottom-panel">
         <Outlet />
       </div>
     </div>

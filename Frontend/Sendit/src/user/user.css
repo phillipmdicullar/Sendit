@@ -3,3 +3,15 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
 }
+.user-dashboard {
+  display: flex;
+  flex-direction: column;
+}
+.user-logout button {
+  padding: 0.5rem 2rem;
+  
+}
+.user-panel ul{
+  display: flex;
+  gap: 3rem;
+}
