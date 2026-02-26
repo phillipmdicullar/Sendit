@@ -7,24 +7,21 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
-  const isAdminDashboard =
-    location.pathname.startsWith('/admin-dashboard');
+  const hiddenRoutes = ['/admin-dashboard', '/user'];
 
-  // Always run effect
+  const hideNavbar = hiddenRoutes.some(route =>
+    location.pathname.startsWith(route)
+  );
+
   useEffect(() => {
-    if (!isAdminDashboard) {
-      document.body.classList.add('has-navbar');
-    } else {
-      document.body.classList.remove('has-navbar');
-    }
+    document.body.classList.toggle('has-navbar', !hideNavbar);
 
     return () => {
       document.body.classList.remove('has-navbar');
     };
-  }, [isAdminDashboard]);
+  }, [hideNavbar]);
 
-  // Hide visually instead of unmounting component lifecycle
-  if (isAdminDashboard) return null;
+  if (hideNavbar) return null;
 
   return (
     <header className="site-navbar">

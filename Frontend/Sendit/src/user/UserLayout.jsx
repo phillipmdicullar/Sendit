@@ -5,26 +5,42 @@ import { NavLink, Outlet } from 'react-router-dom'
 
 function UserLayout() {
   return (
-    <div className="user-dashboard">
-      <div className="user-panel">
-        <ul>
-          <li>
-            <NavLink to="/user">Home</NavLink>
-          </li>
-          <li>
-            <NavLink to="/user/create">Create Order</NavLink>
-          </li>
-          <li>
-            <NavLink to="/user/orders">My Orders</NavLink>
-          </li>
-          <li>
-            <NavLink to="/track">Track Parcel</NavLink>
-          </li>
-        </ul>
-      </div>
-      <div className="bottom-panel">
+    <div className="user-layout">
+
+      {/* Sidebar / Navigation */}
+      <aside className="user-nav">
+        <div className="user-brand">
+          <img src={Logo} alt="Sendit" />
+          <h3>Sendit</h3>
+        </div>
+
+        <nav>
+          <NavLink to="/user" end className="nav-item">
+            Home
+          </NavLink>
+
+          <NavLink to="/user/create" className="nav-item">
+            Create Order
+          </NavLink>
+
+          <NavLink to="/user/orders" className="nav-item">
+            My Orders
+          </NavLink>
+
+          <NavLink to="/track" className="nav-item">
+            Track Parcel
+          </NavLink>
+        </nav>
+        <div className="button">
+          <button>Logout</button>
+        </div>
+      </aside>
+
+      {/* Page Content */}
+      <main className="user-content">
         <Outlet />
-      </div>
+      </main>
+
     </div>
   )
 }

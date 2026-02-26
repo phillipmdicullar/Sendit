@@ -1,66 +1,75 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { api } from "../../../api/api";
 import "./summary.css";
+export default function Summary() {
+  const [parcels, setParcels] = useState([]);
+  const navigate = useNavigate();
 
-function Summary() {
+  useEffect(() => {
+    loadParcels();
+  }, []);
+
+  const loadParcels = async () => {
+    const data = await api.getParcels();
+    setParcels(data);
+  };
+
+  const handleCancel = async (id) => {
+    await api.cancelParcel(id);
+    loadParcels();
+  };
+
   return (
     <div className="summary-container">
+      <h2>My Parcels</h2>
 
-      {/* HEADER */}
-      <div className="summary-header">
-        <h2>Parcel Summary</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Pickup</th>
+            <th>Destination</th>
+            <th>Status</th>
+            <th>Location</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
 
-        <div className="summary-actions">
-          <input type="text" placeholder="Search parcel..." />
-          <button className="primary-btn">Search Parcel</button>
-        </div>
-      </div>
+        <tbody>
+          {parcels.map(parcel => (
+            <tr key={parcel.id}>
+              <td>#{parcel.id}</td>
+              <td>{parcel.pickup_location}</td>
+              <td>{parcel.destination}</td>
+              <td>{parcel.status}</td>
+              <td>{parcel.current_location}</td>
 
-      {/* TABLE */}
-      <div className="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Pickup</th>
-              <th>Destination</th>
-              <th>Status</th>
-              <th>Current Location</th>
-              <th>Price</th>
-           
-              <th>Actions</th>
+              <td>
+                <button
+                  onClick={() =>
+                    navigate(`/dashboard/parcels/${parcel.id}`)
+                  }
+                >
+                  View
+                </button>
+
+                <button
+                  onClick={() =>
+                    navigate(`/dashboard/parcels/${parcel.id}/edit`)
+                  }
+                >
+                  Edit
+                </button>
+
+                <button onClick={() => handleCancel(parcel.id)}>
+                  Cancel
+                </button>
+              </td>
             </tr>
-          </thead>
-
-          <tbody>
-            {[1,2,3,4,5,6].map((item) => (
-              <tr key={item}>
-                <td>#200</td>
-                <td>Kware</td>
-                <td>Nairobi CBD</td>
-
-                <td>
-                  <span className="status transit">
-                    In Transit
-                  </span>
-                </td>
-
-                <td>Kware Kwa Njenga</td>
-                <td>KES 200</td>
-              
-
-                <td className="actions">
-                  <button className="view">View</button>
-                  <button className="edit">Edit</button>
-                  <button className="delete">Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
-
-export default Summary;
