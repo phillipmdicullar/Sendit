@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../api/api"; // your api.js
-
+import { useNavigate } from "react-router-dom";
 function Orders() {
   const [parcels, setParcels] = useState([]);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadParcels = async () => {
@@ -68,8 +69,10 @@ function Orders() {
                   <td>{p.current_location}</td>
                   <td>KES {p.price}</td>
                   <td className="actions">
-                    <button className="view">View</button>
-                    <button className="edit">Edit</button>
+                    <button className="view"   onClick={() =>
+                    navigate(`/admin-dashboard/orders/${p.id}`)
+                  }>View</button>
+                    <button className="edit" onClick={() => navigate(`/admin-dashboard/orders/${p.id}/edit`)}>Edit</button>
                     <button className="delete">Delete</button>
                   </td>
                 </tr>

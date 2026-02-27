@@ -45,24 +45,24 @@ export default function Summary() {
               <td>{parcel.status}</td>
               <td>{parcel.current_location}</td>
 
-              <td>
-                <button
+              <td className="actions">
+                <button className="view"
                   onClick={() =>
-                    navigate(`/dashboard/parcels/${parcel.id}`)
+                    navigate(`/admin-dashboard/orders/${parcel.id}`)
                   }
                 >
-                  View
+                view
                 </button>
 
-                <button
+                <button className="edit"
                   onClick={() =>
-                    navigate(`/dashboard/parcels/${parcel.id}/edit`)
+                    navigate(`/admin-dashboard/orders/${parcel.id}/edit`)
                   }
                 >
                   Edit
                 </button>
 
-                <button onClick={() => handleCancel(parcel.id)}>
+                <button className="delete" onClick={() => handleCancel(parcel.id)}>
                   Cancel
                 </button>
               </td>
