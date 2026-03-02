@@ -24,7 +24,7 @@ function Top() {
       // Compute counts
       const total = parcels.length;
       const inTransit = parcels.filter(p => p.status === 'in_transit').length;
-      const delivered = parcels.filter(p => p.status === 'delivered').length;
+      const delivered = parcels.filter(p => p.status === 'arrived').length;
       const canceled = parcels.filter(p => p.is_cancelled).length;
 
       setStats({ total, inTransit, delivered, canceled });
