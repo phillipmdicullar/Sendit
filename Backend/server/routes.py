@@ -1,16 +1,18 @@
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import (
-    create_access_token,
-    jwt_required,
-    get_jwt_identity
-)
 from werkzeug.security import generate_password_hash, check_password_hash
 from server.models import db, User, Parcel, ParcelStatus, Location, Notification
 
 api = Blueprint("api", __name__, url_prefix="/api")
 
 
-# ---------- AUTH ----------
+# ---------------- TEMP AUTH BYPASS ----------------
+def fake_identity():
+    # pretend user 1 is logged in
+    return {"id": 1, "role": "admin"}
+# --------------------------------------------------
+
+
+# ================= AUTH =================
 @api.route("/auth/register", methods=["POST"])
 def register():
     data = request.get_json()
@@ -23,6 +25,7 @@ def register():
         email=data["email"],
         password=generate_password_hash(data["password"])
     )
+
     db.session.add(user)
     db.session.commit()
 
@@ -37,17 +40,14 @@ def login():
     if not user or not check_password_hash(user.password, data["password"]):
         return jsonify({"error": "Invalid credentials"}), 401
 
-    token = create_access_token(identity={"id": user.id, "role": user.role})
-
-    return jsonify(access_token=token)
+    return jsonify({"message": "Login successful", "user_id": user.id})
 
 
-# ---------- USER ----------
+# ================= USER =================
 @api.route("/users/me", methods=["GET"])
-@jwt_required()
 def get_profile():
-    identity = get_jwt_identity()
-    user = User.query.get(identity["id"])
+    identity = fake_identity()
+    user = User.query.get_or_404(identity["id"])
 
     return jsonify({
         "id": user.id,
@@ -57,11 +57,76 @@ def get_profile():
     })
 
 
-# ---------- PARCELS ----------
+@api.route("/users/me/notifications", methods=["GET"])
+def get_notifications():
+    identity = fake_identity()
+    user = User.query.get_or_404(identity["id"])
+
+    notifications = (
+        Notification.query
+        .join(Parcel)
+        .filter(Parcel.user_id == user.id)
+        .order_by(Notification.sent_at.desc())
+        .all()
+    )
+
+    return jsonify([
+        {
+            "id": n.id,
+            "message": n.message,
+            "is_read": n.is_read,
+            "sent_at": n.sent_at.isoformat()
+        }
+        for n in notifications
+    ])
+
+
+@api.route("/notifications/<int:notification_id>/read", methods=["PATCH"])
+def mark_notification_read(notification_id):
+    identity = fake_identity()
+
+    notification = Notification.query.get_or_404(notification_id)
+
+    # 🔐 Ensure user owns this notification
+    if notification.parcel.user_id != identity["id"]:
+        return jsonify({"error": "Unauthorized"}), 403
+
+    notification.is_read = True
+    db.session.commit()
+
+    return jsonify({"message": "Notification marked as read"})
+
+
+# ================= ADMIN NOTIFICATIONS =================
+@api.route("/admin/notifications", methods=["GET"])
+def admin_notifications():
+    identity = fake_identity()
+
+    if identity["role"] != "admin":
+        return jsonify({"error": "Unauthorized"}), 403
+
+    notifications = (
+        Notification.query
+        .order_by(Notification.sent_at.desc())
+        .limit(20)
+        .all()
+    )
+
+    return jsonify([
+        {
+            "id": n.id,
+            "message": n.message,
+            "is_read": n.is_read,
+            "sent_at": n.sent_at.isoformat()
+        }
+        for n in notifications
+    ])
+
+
+# ================= PARCELS =================
 @api.route("/parcels", methods=["POST"])
-@jwt_required()
 def create_parcel():
-    identity = get_jwt_identity()
+    identity = fake_identity()
     data = request.get_json()
 
     parcel = Parcel(
@@ -76,70 +141,94 @@ def create_parcel():
 
     status = ParcelStatus(parcel_id=parcel.id, status="created")
     db.session.add(status)
+
+    # 🔔 Notification
+    notification = Notification(
+        parcel_id=parcel.id,
+        email=parcel.user.email,
+        message="Your parcel has been created."
+    )
+    db.session.add(notification)
+
     db.session.commit()
 
     return jsonify({"message": "Parcel created", "parcel_id": parcel.id}), 201
 
 
 @api.route("/parcels", methods=["GET"])
-@jwt_required()
 def get_user_parcels():
-    identity = get_jwt_identity()
-    parcels = Parcel.query.filter_by(user_id=identity["id"]).all()
+    parcels = Parcel.query.all()
 
-    return jsonify([
-        {
-            "id": p.id,
-            "destination": p.destination,
-            "status": p.statuses[-1].status if p.statuses else "unknown"
-        } for p in parcels
-    ])
+    return jsonify([p.to_dict() for p in parcels])
 
 
-@api.route("/parcels/<int:parcel_id>/destination", methods=["PATCH"])
-@jwt_required()
-def change_destination(parcel_id):
-    data = request.get_json()
-    parcel = Parcel.query.get_or_404(parcel_id)
+@api.route("/admin/parcels/<int:parcel_id>", methods=["PATCH"])
+def admin_update_parcel(parcel_id):
+    identity = fake_identity()
 
-    parcel.destination = data["destination"]
-    db.session.commit()
-
-    return jsonify({"message": "Destination updated"})
-
-
-@api.route("/parcels/<int:parcel_id>/cancel", methods=["PATCH"])
-@jwt_required()
-def cancel_parcel(parcel_id):
-    parcel = Parcel.query.get_or_404(parcel_id)
-    parcel.is_cancelled = True
-
-    status = ParcelStatus(parcel_id=parcel.id, status="cancelled")
-    db.session.add(status)
-    db.session.commit()
-
-    return jsonify({"message": "Parcel cancelled"})
-
-
-# ---------- ADMIN ----------
-@api.route("/admin/parcels/<int:parcel_id>/status", methods=["PATCH"])
-@jwt_required()
-def update_status(parcel_id):
-    identity = get_jwt_identity()
     if identity["role"] != "admin":
         return jsonify({"error": "Unauthorized"}), 403
 
     data = request.get_json()
     parcel = Parcel.query.get_or_404(parcel_id)
 
-    status = ParcelStatus(parcel_id=parcel.id, status=data["status"])
-    location = Location(
-        parcel_id=parcel.id,
-        latitude=data["latitude"],
-        longitude=data["longitude"]
-    )
+    # ---- Destination update ----
+    if "destination" in data and data["destination"]:
+        parcel.destination = data["destination"]
 
-    db.session.add_all([status, location])
+        notification = Notification(
+            parcel_id=parcel.id,
+            email=parcel.user.email,
+            message=f"Destination updated to {data['destination']}."
+        )
+        db.session.add(notification)
+
+    # ---- Status update ----
+    if "status" in data and data["status"]:
+        status = ParcelStatus(
+            parcel_id=parcel.id,
+            status=data["status"]
+        )
+        db.session.add(status)
+
+        notification = Notification(
+            parcel_id=parcel.id,
+            email=parcel.user.email,
+            message=f"Your parcel is now '{data['status']}'."
+        )
+        db.session.add(notification)
+
+    # ---- Location update ----
+    if "latitude" in data and "longitude" in data:
+        location = Location(
+            parcel_id=parcel.id,
+            latitude=data["latitude"],
+            longitude=data["longitude"]
+        )
+        db.session.add(location)
+
     db.session.commit()
 
-    return jsonify({"message": "Status updated"})
+    return jsonify({"message": "Parcel updated successfully"})
+
+
+@api.route("/parcels/<int:parcel_id>/cancel", methods=["PATCH"])
+def cancel_parcel(parcel_id):
+    identity = fake_identity()
+    parcel = Parcel.query.get_or_404(parcel_id)
+
+    parcel.is_cancelled = True
+
+    status = ParcelStatus(parcel_id=parcel.id, status="cancelled")
+    db.session.add(status)
+
+    notification = Notification(
+        parcel_id=parcel.id,
+        email=parcel.user.email,
+        message="Your parcel has been cancelled."
+    )
+    db.session.add(notification)
+
+    db.session.commit()
+
+    return jsonify({"message": "Parcel cancelled"})
