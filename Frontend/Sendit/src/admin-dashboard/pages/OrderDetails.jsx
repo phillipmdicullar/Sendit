@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { api } from "../../api/api";
 import { toast } from "react-toastify";
 import { GoogleMap, Marker, useJsApiLoader, Autocomplete } from "@react-google-maps/api";
-
+import "./details.css";
 const containerStyle = { width: "100%", height: "400px" };
 
 export default function EditOrder() {
