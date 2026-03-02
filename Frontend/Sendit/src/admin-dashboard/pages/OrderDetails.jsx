@@ -1,78 +1,125 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { GoogleMap, LoadScript, Marker, InfoWindow } from "@react-google-maps/api";
+import { useParams, useNavigate } from "react-router-dom";
 import { api } from "../../api/api";
+import { toast } from "react-toastify";
+import { GoogleMap, Marker, useJsApiLoader, Autocomplete } from "@react-google-maps/api";
 
-const mapContainerStyle = {
-  height: "500px",
-  width: "100%",
-};
+const containerStyle = { width: "100%", height: "400px" };
 
-export default function OrderDetails() {
+export default function EditOrder() {
   const { id } = useParams();
-  const [parcel, setParcel] = useState(null);
-  const [pickupPos, setPickupPos] = useState(null);
-  const [destPos, setDestPos] = useState(null);
+  const navigate = useNavigate();
 
-  // Replace with your Google Maps API Key
-  const GOOGLE_MAPS_API_KEY = "AIzaSyAZCWy8JwbXSWS05QBXElvZaDsikj8VVZ4";
+  const [parcel, setParcel] = useState(null);
+  const [destination, setDestination] = useState("");
+  const [status, setStatus] = useState("");
+  const [location, setLocation] = useState({ lat: null, lng: null });
+
+  const [autocomplete, setAutocomplete] = useState(null);
+
+  const { isLoaded } = useJsApiLoader({
+  googleMapsApiKey: "AIzaSyAZCWy8JwbXSWS05QBXElvZaDsikj8VVZ4", // your key directly
+  libraries: ["places"],
+});
 
   useEffect(() => {
     const loadParcel = async () => {
       const data = await api.getParcels();
       const found = data.find((p) => p.id === Number(id));
-      setParcel(found);
-
-      // Geocode pickup and destination if coordinates not stored
       if (found) {
-        // If you already store lat/lng, use them directly
-        // For demo, let's assume we have coordinates in parcel
-        if (found.pickup_lat && found.pickup_lng) {
-          setPickupPos({ lat: found.pickup_lat, lng: found.pickup_lng });
-        } else {
-          // Fallback demo position
-          setPickupPos({ lat: 37.7749, lng: -122.4194 });
-        }
-
-        if (found.dest_lat && found.dest_lng) {
-          setDestPos({ lat: found.dest_lat, lng: found.dest_lng });
-        } else {
-          // Fallback demo position
-          setDestPos({ lat: 34.0522, lng: -118.2437 });
+        setParcel(found);
+        setDestination(found.destination);
+        setStatus(found.status);
+        if (found.current_location) {
+          setLocation({
+            lat: found.current_location.latitude,
+            lng: found.current_location.longitude,
+          });
         }
       }
     };
-
     loadParcel();
   }, [id]);
 
-  if (!parcel || !pickupPos || !destPos) return <p>Loading parcel map...</p>;
-
-  // Calculate center point between pickup and destination
-  const center = {
-    lat: (pickupPos.lat + destPos.lat) / 2,
-    lng: (pickupPos.lng + destPos.lng) / 2,
+  const handleMapClick = (e) => {
+    setLocation({ lat: e.latLng.lat(), lng: e.latLng.lng() });
   };
+
+  const handlePlaceChanged = () => {
+    if (autocomplete !== null) {
+      const place = autocomplete.getPlace();
+      if (place.geometry) {
+        setLocation({
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
+        });
+      }
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!location.lat || !location.lng) {
+      toast.error("Please select a valid location on the map!");
+      return;
+    }
+
+    try {
+      const res = await api.updateParcelAdmin(id, {
+        destination,
+        status,
+        latitude: location.lat,
+        longitude: location.lng,
+      });
+
+      if (res.message) {
+        toast.success("Parcel updated successfully 🚚");
+        setTimeout(() => navigate("/admin-dashboard"), 1500);
+      } else {
+        toast.error("Update failed");
+      }
+    } catch (err) {
+      toast.error("Server error occurred");
+    }
+  };
+
+  if (!parcel || !isLoaded) return <p>Loading...</p>;
 
   return (
     <div>
-      <h2>Parcel #{parcel.id}</h2>
-      <p>Pickup: {parcel.pickup_location}</p>
-      <p>Destination: {parcel.destination}</p>
-      <p>Status: {parcel.status}</p>
+      <h2>Edit Parcel #{parcel.id}</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          placeholder="Destination"
+          value={destination}
+          onChange={(e) => setDestination(e.target.value)}
+        />
+        <select value={status} onChange={(e) => setStatus(e.target.value)}>
+          <option value="">Select Status</option>
+          <option value="pending">Pending</option>
+          <option value="in_transit">In Transit</option>
+          <option value="arrived">Arrived</option>
+          <option value="delivered">Delivered</option>
+        </select>
 
-      <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          zoom={6}
-          center={center}
+        <Autocomplete
+          onLoad={(ref) => setAutocomplete(ref)}
+          onPlaceChanged={handlePlaceChanged}
         >
-          {/* Pickup Marker */}
-          <Marker position={pickupPos} label="P" />
-          {/* Destination Marker */}
-          <Marker position={destPos} label="D" />
+          <input type="text" placeholder="Search for location..." />
+        </Autocomplete>
+
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={location.lat && location.lng ? location : { lat: -1.2921, lng: 36.8219 }}
+          zoom={12}
+          onClick={handleMapClick}
+        >
+          {location.lat && location.lng && <Marker position={location} />}
         </GoogleMap>
-      </LoadScript>
+
+        <button type="submit">Update Parcel</button>
+      </form>
     </div>
   );
 }
