@@ -2,18 +2,31 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { api } from "../../api/api";
 import "./edit-order.css";
+import { toast } from "react-toastify";
 export default function EditOrder() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [destination, setDestination] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    await api.changeDestination(id, destination);
+  try {
+    const res = await api.changeDestination(id, destination);
 
-    navigate("/admin-dashboard");
-  };
+    if (res.message || res.success) {
+      toast.success("Destination updated successfully ");
+      setTimeout(() => {
+        navigate("/admin-dashboard");
+      }, 1500);
+    } else {
+      toast.error("Failed to update destination ");
+    }
+
+  } catch (error) {
+    toast.error("Server error occurred ");
+  }
+};
 
   return (
     <div>
