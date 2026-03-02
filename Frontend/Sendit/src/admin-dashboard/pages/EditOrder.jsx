@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { api } from "../../api/api";
-
+import "./edit-order.css";
 export default function EditOrder() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ export default function EditOrder() {
 
     await api.changeDestination(id, destination);
 
-    navigate("/dashboard");
+    navigate("/admin-dashboard");
   };
 
   return (
