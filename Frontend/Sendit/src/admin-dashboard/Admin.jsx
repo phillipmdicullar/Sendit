@@ -8,7 +8,7 @@ function Admin() {
       <div className="left-panel">
         <div className="top">
           <img src={Logo} alt="logo" />
-          <h3>Admin</h3>
+       
         </div>
 
         <ul>
