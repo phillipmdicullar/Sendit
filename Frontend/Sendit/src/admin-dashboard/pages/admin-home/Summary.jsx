@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../../api/api";
 import "./summary.css";
+
 export default function Summary() {
   const [parcels, setParcels] = useState([]);
   const navigate = useNavigate();
@@ -43,18 +44,24 @@ export default function Summary() {
               <td>{parcel.pickup_location}</td>
               <td>{parcel.destination}</td>
               <td>{parcel.status}</td>
-              <td>{parcel.current_location}</td>
+              <td>
+                {parcel.current_location
+                  ? `${parcel.current_location.latitude}, ${parcel.current_location.longitude}`
+                  : "Unknown"}
+              </td>
 
               <td className="actions">
-                <button className="view"
+                <button
+                  className="view"
                   onClick={() =>
                     navigate(`/admin-dashboard/orders/${parcel.id}`)
                   }
                 >
-                view
+                  View
                 </button>
 
-                <button className="edit"
+                <button
+                  className="edit"
                   onClick={() =>
                     navigate(`/admin-dashboard/orders/${parcel.id}/edit`)
                   }

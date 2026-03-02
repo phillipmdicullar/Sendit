@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './nav.css';
 import Logo from '../assets/logo.png';
+import NotificationBell from './NotificationBell';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -25,6 +26,7 @@ export default function Navbar() {
 
   return (
     <header className="site-navbar">
+        
       <div className="container">
         <div className="brand">
           <img src={Logo} alt="Sendit Logo" />

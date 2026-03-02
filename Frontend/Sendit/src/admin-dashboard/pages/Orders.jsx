@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { api } from "../../api/api"; // your api.js
+import { api } from "../../api/api";
 import { useNavigate } from "react-router-dom";
+
 function Orders() {
   const [parcels, setParcels] = useState([]);
   const [search, setSearch] = useState("");
@@ -10,7 +11,6 @@ function Orders() {
     const loadParcels = async () => {
       try {
         const data = await api.getParcels();
-        // Fix here: handle array or { parcels: [...] }
         setParcels(Array.isArray(data) ? data : data.parcels || []);
       } catch (error) {
         console.error("Failed to fetch parcels:", error);
@@ -19,14 +19,12 @@ function Orders() {
     loadParcels();
   }, []);
 
-  // Filter parcels by search
   const filteredParcels = parcels.filter(p =>
     p.destination?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <div className="summary-container">
-      {/* HEADER */}
       <div className="summary-header">
         <h2>Parcel Orders</h2>
         <div className="summary-actions">
@@ -40,7 +38,6 @@ function Orders() {
         </div>
       </div>
 
-      {/* TABLE */}
       <div className="table-wrapper">
         <table>
           <thead>
@@ -59,20 +56,32 @@ function Orders() {
               filteredParcels.map(p => (
                 <tr key={p.id}>
                   <td>#{p.id}</td>
-                  <td>{p.pickup}</td>
+                  <td>{p.pickup_location}</td>
                   <td>{p.destination}</td>
                   <td>
                     <span className={`status ${p.status.toLowerCase().replace(" ", "-")}`}>
                       {p.status}
                     </span>
                   </td>
-                  <td>{p.current_location}</td>
+                  <td>
+                    {p.current_location
+                      ? `${p.current_location.latitude}, ${p.current_location.longitude}`
+                      : "Unknown"}
+                  </td>
                   <td>KES {p.price}</td>
                   <td className="actions">
-                    <button className="view"   onClick={() =>
-                    navigate(`/admin-dashboard/orders/${p.id}`)
-                  }>View</button>
-                    <button className="edit" onClick={() => navigate(`/admin-dashboard/orders/${p.id}/edit`)}>Edit</button>
+                    <button
+                      className="view"
+                      onClick={() => navigate(`/admin-dashboard/orders/${p.id}`)}
+                    >
+                      View
+                    </button>
+                    <button
+                      className="edit"
+                      onClick={() => navigate(`/admin-dashboard/orders/${p.id}/edit`)}
+                    >
+                      Edit
+                    </button>
                     <button className="delete">Delete</button>
                   </td>
                 </tr>

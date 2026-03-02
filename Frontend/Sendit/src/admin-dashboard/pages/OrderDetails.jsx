@@ -7,13 +7,20 @@ export default function OrderDetails() {
   const [parcel, setParcel] = useState(null);
 
   useEffect(() => {
-    api.getParcels().then(data => {
+    const loadParcel = async () => {
+      const data = await api.getParcels();
       const found = data.find(p => p.id === Number(id));
       setParcel(found);
-    });
+    };
+    loadParcel();
   }, [id]);
 
   if (!parcel) return <p>Loading...</p>;
+
+  // Safely convert current_location object to string
+  const locationStr = parcel.current_location
+    ? `${parcel.current_location.latitude}, ${parcel.current_location.longitude}`
+    : "Unknown";
 
   return (
     <div>
@@ -21,7 +28,7 @@ export default function OrderDetails() {
       <p>Pickup: {parcel.pickup_location}</p>
       <p>Destination: {parcel.destination}</p>
       <p>Status: {parcel.status}</p>
-      <p>Current Location: {parcel.current_location}</p>
+      <p>Current Location: {locationStr}</p>
     </div>
   );
 }

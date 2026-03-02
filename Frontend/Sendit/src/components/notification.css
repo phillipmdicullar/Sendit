@@ -1,0 +1,37 @@
+.notification-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.bell {
+  font-size: 22px;
+  position: relative;
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  font-size: 12px;
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  width: 300px;
+  background: white;
+  border: 1px solid white;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.notification {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.notification.unread {
+  background: #f2ffe8b0;
+  font-weight: bold;
+}

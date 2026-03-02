@@ -34,4 +34,31 @@ export const api = {
     });
     return res.json();
   },
+  updateParcelAdmin: async (id, data) => {
+  const res = await fetch(`${BASE_URL}/api/admin/parcels/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  return res.json();
+},getNotifications: async () => {
+  const res = await fetch(`${BASE_URL}/api/users/me/notifications`);
+  return res.json();
+},
+
+getAdminNotifications: async () => {
+  const res = await fetch(`${BASE_URL}/api/admin/notifications`);
+  return res.json();
+},
+
+markNotificationRead: async (id) => {
+  const res = await fetch(
+    `${BASE_URL}/api/notifications/${id}/read`,
+    { method: "PATCH" }
+  );
+  return res.json();
+},
 };
