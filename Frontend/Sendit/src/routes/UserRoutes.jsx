@@ -5,15 +5,18 @@ import UserLayout from '../user/UserLayout'
 import CreateOrder from '../user/pages/CreateOrder'
 import Orders from '../user/pages/Orders'
 import OrderDetail from '../user/pages/OrderDetail'
+import Settings from '../user/pages/Settings'
 
 function UserRoutes(){
   return (
     <Routes>
       <Route path="/user" element={<UserLayout />}>
+        <Route path='home' element={<Orders />} />
         <Route index element={<Orders />} />
         <Route path="create" element={<CreateOrder />} />
         <Route path="orders" element={<Orders />} />
         <Route path="orders/:id" element={<OrderDetail />} />
+        <Route path="settings" element={<Settings />} />
       </Route>
     </Routes>
   )

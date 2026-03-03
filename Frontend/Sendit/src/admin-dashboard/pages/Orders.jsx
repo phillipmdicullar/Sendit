@@ -47,7 +47,7 @@ function Orders() {
               <th>Destination</th>
               <th>Status</th>
               <th>Current Location</th>
-              <th>Price</th>
+              
               <th>Actions</th>
             </tr>
           </thead>
@@ -68,7 +68,7 @@ function Orders() {
                       ? `${p.current_location.latitude}, ${p.current_location.longitude}`
                       : "Unknown"}
                   </td>
-                  <td>KES {p.price}</td>
+                  
                   <td className="actions">
                     <button
                       className="view"
